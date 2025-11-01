@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spade & Scale - Elevate Your Brand</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#4F46E5', // Indigo-600
+                        'accent-teal': '#14B8A6',  // Teal-500
+                        'gemini-red': '#EF4444', // Red-500
+                    },
+                },
+            },
+        }
+    </script>
+    <!-- Custom Styles (Minimal, mostly for smooth scroll) -->
+    <style>
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Loading indicator for form submission */
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        .loading-spinner-lg {
+             border: 4px solid rgba(100, 100, 100, 0.3);
+            border-top: 4px solid #4F46E5; /* primary-blue */
+            width: 40px;
+            height: 40px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#home" class="text-2xl font-bold text-primary-blue hover:text-accent-teal transition duration-300">
+                    Spade <span class="text-accent-teal">&</span> Scale
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#services" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300">Services</a>
+                    <a href="#about" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300">About Us</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary-blue font-medium transition duration-300">Contact</a>
+                    
+                    <!-- Admin Links - hidden by default for public users -->
+                    <a href="#leads-viewer" class="admin-link text-gray-600 hover:text-primary-blue font-medium transition duration-300 hidden">Leads</a>
+
+                    <!-- LOGIN/PROFILE ICON (Directs to Admin View) - hidden by default for public users -->
+                    <a href="#leads-viewer" title="Admin Profile/Login" class="admin-link p-1 rounded-full text-primary-blue hover:text-accent-teal transition duration-300 hidden">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    </a>
+                    
+                    <a href="#contact" class="px-3 py-1 text-sm font-semibold rounded-full bg-accent-teal text-white hover:bg-primary-blue transition duration-300 shadow-md">Get Started</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-primary-blue focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-blue">Services</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-blue">About Us</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-blue">Contact</a>
+                
+                <!-- MOBILE LEADS/ADMIN LINK WITH ICON - hidden by default for public users -->
+                <a href="#leads-viewer" class="admin-link flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary-blue hidden">
+                    <svg class="w-5 h-5 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span>Leads (Admin View)</span>
+                </a>
+
+                <a href="#contact" class="block w-full text-center px-4 py-2 mt-2 rounded-md text-base font-semibold bg-accent-teal text-white hover:bg-primary-blue transition duration-300">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section id="home" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
+            <div class="lg:w-1/2 mb-10 lg:mb-0">
+                <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+                    Elevate Your Brand. <br class="hidden sm:inline">Achieve <span class="text-accent-teal">Digital Domination</span>.
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-lg">
+                    We combine data-driven strategy with creative execution to deliver measurable growth for your business. Stop guessing, start scaling.
+                </p>
+                <a href="#contact" class="inline-block px-8 py-3 text-lg font-semibold rounded-xl bg-primary-blue text-white shadow-xl hover:bg-accent-teal transition duration-300 transform hover:scale-105">
+                    Start Your Growth Journey
+                </a>
+            </div>
+            <!-- Placeholder Image for a Marketing Dashboard/Graph -->
+            <div class="lg:w-1/2">
+                <div class="bg-gray-100 p-8 rounded-2xl shadow-2xl border border-gray-200">
+                    <img src="https://placehold.co/600x400/818CF8/FFFFFF?text=Digital+Strategy+Dashboard" alt="Marketing Dashboard Illustration" class="w-full h-auto rounded-lg object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Services Section -->
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-primary-blue text-sm font-semibold uppercase tracking-wider">Our Expertise</span>
+                <h2 class="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">Services Designed for Scale</h2>
+                <p class="mt-4 text-xl text-gray-600">From concept to conversion, we cover your entire digital presence.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Service Card 1: Digital Strategy -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-t-4 border-accent-teal">
+                    <div class="text-accent-teal mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Digital Strategy</h3>
+                    <p class="text-gray-600">We build comprehensive digital roadmaps focused on your core business objectives and target audience.</p>
+                </div>
+
+                <!-- Service Card 2: SEO & Content -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-t-4 border-primary-blue">
+                    <div class="text-primary-blue mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M9 11h.01"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEO & Content</h3>
+                    <p class="text-gray-600">Boost organic traffic and authority with high-quality content optimized for search engine visibility.</p>
+                </div>
+
+                <!-- Service Card 3: Social Media Mgt. -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-t-4 border-accent-teal">
+                    <div class="text-accent-teal mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-3H17v3zm2-17H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Social Media Mgt.</h3>
+                    <p class="text-gray-600">Engage your audience, build community, and drive traffic across all major social platforms.</p>
+                </div>
+
+                <!-- Service Card 4: Paid Advertising -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-t-4 border-primary-blue">
+                    <div class="text-primary-blue mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Paid Advertising (PPC)</h3>
+                    <p class="text-gray-600">Maximize ROI with targeted campaigns on Google Ads, Facebook, and other high-impact channels.</p>
+                </div>
+                
+                <!-- Service Card 5: Branding & Design -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-t-4 border-accent-teal">
+                    <div class="text-accent-teal mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 100 4m-3 12h2m-6-12h2m6 12h2m4 0h2M7 10h10M4 14h16m-4 5h4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Branding & Design</h3>
+                    <p class="text-gray-600">Crafting compelling visual identities, including logo design, style guides, and web asset creation.</p>
+                </div>
+
+                <!-- Service Card 6: Client Relations & Interaction -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:-translate-y-1 border-t-4 border-primary-blue">
+                    <div class="text-primary-blue mb-4">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Client Relations</h3>
+                    <p class="text-gray-600">Personalized service, proactive communication, and transparent, tailored performance reporting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. About Us Section (Value Proposition) -->
+    <section id="about" class="py-20 lg:py-24 bg-primary-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+                <div>
+                    <span class="text-accent-teal text-sm font-semibold uppercase tracking-wider">Our Difference</span>
+                    <h2 class="mt-2 text-4xl font-extrabold sm:text-5xl mb-6">Why Partner with Spade & Scale?</h2>
+                    <p class="text-xl mb-8 opacity-90">
+                        We don't just run campaigns; we integrate with your team as a growth partner. Our strategies are transparent, data-driven, and centered on delivering real, measurable business outcomes, not just vanity metrics.
+                    </p>
+                    <a href="#contact" class="inline-block px-8 py-3 text-lg font-semibold rounded-xl bg-accent-teal text-white shadow-xl hover:bg-white hover:text-primary-blue transition duration-300 transform hover:scale-105">
+                        Let's Discuss Your Goals
+                    </a>
+                </div>
+                <div class="mt-10 lg:mt-0 space-y-6">
+                    <!-- Stat 1 -->
+                    <div class="flex items-center bg-primary-blue/70 p-4 rounded-xl shadow-lg">
+                        <div class="flex-shrink-0 text-accent-teal mr-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.818 17.586a11.933 11.933 0 01-1.275-2.091M5.793 15.656A11.954 11.954 0 014 12c0-2.036.576-3.958 1.574-5.617M20.207 15.656a11.954 11.954 0 00-1.793-2.091M17 12c0 2.036-.576 3.958-1.574 5.617M12 21.05v-2m0-4v-2"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold">150%+</p>
+                            <p class="text-sm opacity-80">Average Client ROI Increase</p>
+                        </div>
+                    </div>
+                    <!-- Stat 2 -->
+                    <div class="flex items-center bg-primary-blue/70 p-4 rounded-xl shadow-lg">
+                        <div class="flex-shrink-0 text-accent-teal mr-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9A9 9 0 003 12m9 9c1.657 0 3-1.343 3-3V5.882a2 2 0 00-4 0v4.236c0 1.657-1.343 3-3 3s-3-1.343-3-3V5.882a2 2 0 014-4V12a3 3 0 006 0z"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold">98%</p>
+                            <p class="text-sm opacity-80">Client Retention Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Contact Form Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-primary-blue text-sm font-semibold uppercase tracking-wider">Let's Connect</span>
+                <h2 class="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">Ready to Scale?</h2>
+                <p class="mt-4 text-xl text-gray-600">Tell us about your project and we'll be in touch within 24 hours.</p>
+            </div>
+
+            <form id="contact-form" class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl border border-gray-100">
+                <!-- Row 1: Name and Email -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-200">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Work Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-200">
+                    </div>
+                </div>
+                
+                <!-- NEW Row 2: Phone and Company -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Contact Number</label>
+                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-200">
+                    </div>
+                    <div>
+                        <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                        <input type="text" id="company" name="company" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-200">
+                        <input type="hidden" id="project_name" name="project_name" value="New Marketing Project">
+                    </div>
+                </div>
+
+                <!-- Row 3: Project Details -->
+                <div class="mb-6">
+                    <label for="project_details" class="block text-sm font-medium text-gray-700 mb-2">Tell Us About Your Project</label>
+                    <textarea id="project_details" name="project_details" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-200"></textarea>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" id="submit-button" class="w-full md:w-auto px-10 py-3 text-lg font-semibold rounded-xl bg-accent-teal text-white shadow-xl hover:bg-primary-blue transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                        <span id="button-text">Submit Inquiry</span>
+                        <div id="loading-spinner" class="loading-spinner ml-3 hidden"></div>
+                    </button>
+                </div>
+                <p id="form-message" class="text-center mt-4 text-sm hidden"></p>
+            </form>
+        </div>
+    </section>
+    
+    <!-- 5. Leads Viewer Section (Personalized Dashboard) -->
+    <div id="leads-viewer-container" class="hidden"> 
+        <section id="leads-viewer" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-red-500 text-sm font-semibold uppercase tracking-wider">Your Control Panel</span>
+                    <h2 class="mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">Personalized Dashboard & Leads Management</h2>
+                    <p class="mt-4 text-xl text-gray-600">Track and qualify inquiries using Gemini insights and status updates.</p>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-white p-6 rounded-xl shadow-xl border-b-4 border-primary-blue">
+                        <p class="text-sm font-medium text-gray-500">Total Inquiries</p>
+                        <p id="kpi-total" class="mt-1 text-3xl font-bold text-gray-900">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-xl border-b-4 border-accent-teal">
+                        <p class="text-sm font-medium text-gray-500">Leads to Contact</p>
+                        <p id="kpi-new" class="mt-1 text-3xl font-bold text-gray-900">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-xl border-b-4 border-gemini-red">
+                        <p class="text-sm font-medium text-gray-500">Qualified Opportunities</p>
+                        <p id="kpi-qualified" class="mt-1 text-3xl font-bold text-gray-900">0</p>
+                    </div>
+                </div>
+
+                <p class="mt-4 text-xl text-gray-600 text-center" id="leads-status">Loading leads...</p>
+                <div id="leads-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Leads will be dynamically inserted here -->
+                </div>
+                <p class="text-center mt-8 text-sm text-gray-500">Your User ID: <span id="display-user-id" class="font-mono bg-gray-200 px-2 py-1 rounded-md text-xs">Loading...</span></p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p class="mb-3 text-xl font-bold text-white">Spade & Scale</p>
+            <p class="text-sm">&copy; <span id="current-year"></span> Spade & Scale. All rights reserved.</p>
+            <p class="mt-4 text-xs">
+                Built with HTML, Tailwind CSS, and Firestore. | Privacy Policy | Terms of Service
+            </p>
+        </div>
+    </footer>
+    
+    <!-- Gemini Analysis Modal -->
+    <div id="gemini-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden z-[9999] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-6 transform transition-all">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h3 class="text-2xl font-bold text-primary-blue" id="modal-title">✨ Lead Analysis and Follow-up Draft</h3>
+                    <button onclick="document.getElementById('gemini-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div id="modal-content-area" class="space-y-6">
+                    <div id="gemini-loading-indicator" class="text-center">
+                        <p id="gemini-loading-message" class="text-center text-gray-500 mb-4">Generating insights, please wait...</p>
+                        <div id="gemini-loading-spinner" class="loading-spinner loading-spinner-lg mx-auto rounded-full"></div>
+                    </div>
+                    <!-- Analysis content will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript for Firebase, Mobile Menu, and Form Handling -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        // NOTE: Added 'doc' and 'updateDoc' for lead status management
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, setLogLevel, query, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Set Firebase logging level for debugging
+        setLogLevel('Debug');
+
+        let db;
+        let auth;
+        let userId = 'anonymous'; // Default ID
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // --- Gemini API Schema Definition ---
+        const responseSchema = {
+            type: "OBJECT",
+            properties: {
+                qualificationSummary: {
+                    type: "STRING",
+                    description: "A one-sentence summary classifying the lead (e.g., 'High-Value SEO Strategy Prospect', 'Small Budget Social Media Management')."
+                },
+                keyNeeds: {
+                    type: "ARRAY",
+                    items: { type: "STRING" },
+                    description: "3-5 bullet points outlining the client's key marketing needs/challenges based on the project details."
+                },
+                draftEmailSubject: {
+                    type: "STRING",
+                    description: "A concise, professional subject line for the follow-up email."
+                },
+                draftEmailBody: {
+                    type: "STRING",
+                    description: "A complete, personalized, and professional email body (using line breaks) for the agency owner to send back."
+                }
+            },
+            propertyOrdering: ["qualificationSummary", "keyNeeds", "draftEmailSubject", "draftEmailBody"]
+        };
+
+        // --- Gemini API Utility Function with Exponential Backoff ---
+        async function callGeminiApi(userQuery, systemPrompt, schema) {
+            const apiKey = ""; // API key will be provided by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema
+                },
+            };
+
+            let responseJson = null;
+            let retries = 0;
+            const maxRetries = 5;
+
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 && retries < maxRetries - 1) {
+                            const delay = Math.pow(2, retries) * 1000 + Math.random() * 1000;
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            retries++;
+                            continue; 
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        const jsonText = candidate.content.parts[0].text;
+                        responseJson = JSON.parse(jsonText);
+                        return responseJson;
+                    } else {
+                        throw new Error("Invalid response structure from Gemini API.");
+                    }
+
+                } catch (error) {
+                    console.error("Gemini API call failed:", error);
+                    responseJson = { error: error.message };
+                    break; 
+                }
+            }
+            return responseJson;
+        }
+
+
+        // --- Firestore Status Utilities ---
+        function getStatusColorClass(status) {
+            switch (status) {
+                case 'New': return 'text-primary-blue bg-primary-blue/10';
+                case 'Contacted': return 'text-yellow-600 bg-yellow-100';
+                case 'Qualified': return 'text-accent-teal bg-accent-teal/10';
+                case 'Closed (Won)': return 'text-green-600 bg-green-100';
+                case 'Closed (Lost)': return 'text-gray-500 bg-gray-100';
+                default: return 'text-gray-800 bg-white';
+            }
+        }
+        function getStatusBorderClass(status) {
+            switch (status) {
+                case 'New': return 'border-primary-blue';
+                case 'Contacted': return 'border-yellow-500';
+                case 'Qualified': return 'border-accent-teal';
+                case 'Closed (Won)': return 'border-green-500';
+                case 'Closed (Lost)': return 'border-gray-500';
+                default: return 'border-gray-300';
+            }
+        }
+
+        // --- Firestore Status Update Function ---
+        async function updateLeadStatus(leadId, newStatus) {
+            if (!db || !userId) {
+                console.error("Database or User ID not ready for updating lead status.");
+                return;
+            }
+            const docRef = doc(db, `artifacts/${appId}/users/${userId}/agency_leads`, leadId);
+            try {
+                await updateDoc(docRef, {
+                    status: newStatus,
+                    updatedAt: new Date()
+                });
+                console.log(`Lead ${leadId} status updated to ${newStatus}`);
+            } catch (error) {
+                console.error("Error updating lead status:", error);
+            }
+        }
+
+        // --- Dashboard Visibility Toggler ---
+        function setDashboardVisibility(isVisible) {
+            const dashboardContainer = document.getElementById('leads-viewer-container');
+            const adminLinks = document.querySelectorAll('.admin-link'); 
+            
+            if (dashboardContainer) {
+                dashboardContainer.classList.toggle('hidden', !isVisible);
+            }
+            adminLinks.forEach(link => {
+                link.classList.toggle('hidden', !isVisible);
+            });
+        }
+
+
+        // --- Firebase Initialization and Authentication ---
+        async function initializeFirebase() {
+            try {
+                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+                if (Object.keys(firebaseConfig).length === 0) {
+                    console.error("Firebase config is missing or invalid.");
+                    return;
+                }
+
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Try to sign in with custom token (Owner) or anonymously (Public Visitor)
+                const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                if (initialAuthToken) {
+                    // This is the owner's session (in this environment)
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Signed in with custom token (Owner).");
+                } else {
+                    // This is a public session (real world)
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously (Public Visitor).");
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        document.getElementById('display-user-id').textContent = userId;
+                        // Determine if the user has a long-term token (simulating the owner)
+                        const isOwnerSession = !!initialAuthToken; 
+                        
+                        // Show the dashboard and admin links only for the owner
+                        setDashboardVisibility(isOwnerSession); 
+
+                        // Only load leads if this is the owner's session
+                        if (isOwnerSession) {
+                             loadLeads(); 
+                        }
+                    } else {
+                        // If auth state changes to signed out (shouldn't happen here, but good practice)
+                        userId = crypto.randomUUID(); 
+                        document.getElementById('display-user-id').textContent = userId;
+                        setDashboardVisibility(false); 
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+            }
+        }
+        
+        // --- Lead Management Logic ---
+        function loadLeads() {
+            if (!db || !userId) {
+                console.warn("Database or User ID not ready for loading leads.");
+                return;
+            }
+
+            const leadsListContainer = document.getElementById('leads-list');
+            const leadsStatus = document.getElementById('leads-status');
+            const collectionPath = `artifacts/${appId}/users/${userId}/agency_leads`;
+            const leadsQuery = collection(db, collectionPath);
+            
+            // Set up real-time listener for leads
+            onSnapshot(leadsQuery, (snapshot) => {
+                const leads = [];
+                // 1. Initialize KPIs
+                let kpis = { total: 0, new: 0, contacted: 0, qualified: 0 };
+
+                snapshot.forEach(doc => {
+                    const leadData = { id: doc.id, status: 'New', ...doc.data() }; 
+                    leads.push(leadData);
+
+                    // Update KPIs
+                    kpis.total++;
+                    const status = leadData.status || 'New';
+                    if (status === 'New') kpis.new++;
+                    if (status === 'Contacted') kpis.contacted++;
+                    if (status === 'Qualified' || status === 'Closed (Won)') kpis.qualified++; // Count won leads as qualified too
+                });
+
+                // 2. Update KPI display
+                document.getElementById('kpi-total').textContent = kpis.total;
+                document.getElementById('kpi-new').textContent = kpis.new;
+                document.getElementById('kpi-qualified').textContent = kpis.qualified;
+
+
+                leadsListContainer.innerHTML = ''; // Clear existing list
+
+                if (leads.length === 0) {
+                    leadsStatus.textContent = "No inquiries submitted yet.";
+                } else {
+                    leadsStatus.textContent = `Displaying ${leads.length} total inquiries. (Click ✨ to analyze)`;
+                    
+                    // Sort leads by submittedAt descending (newest first)
+                    leads.sort((a, b) => {
+                        const dateA = a.submittedAt?.toDate ? a.submittedAt.toDate().getTime() : 0;
+                        const dateB = b.submittedAt?.toDate ? b.submittedAt.toDate().getTime() : 0;
+                        return dateB - dateA;
+                    });
+
+                    leads.forEach(lead => {
+                        const date = lead.submittedAt?.toDate ? lead.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                        const time = lead.submittedAt?.toDate ? lead.submittedAt.toDate().toLocaleTimeString() : '';
+                        
+                        // Get the current status, defaulting to 'New' if not set
+                        const currentStatus = lead.status || 'New';
+
+                        // Prepare lead data for the button, handling potential quotes in projectDetails
+                        const leadDataJson = JSON.stringify({
+                            name: lead.name,
+                            email: lead.email,
+                            phone: lead.phone || 'N/A', // Include new phone field
+                            company: lead.company,
+                            projectDetails: lead.projectDetails
+                        }).replace(/'/g, '&apos;'); // Escape single quotes for HTML attribute
+                        
+                        const phoneDisplay = lead.phone ? `<p class="text-sm text-gray-600 mb-1">Phone: <span class="font-semibold">${lead.phone}</span></p>` : '';
+
+
+                        // Status Dropdown HTML generation
+                        const allStatuses = ['New', 'Contacted', 'Qualified', 'Closed (Won)', 'Closed (Lost)'];
+                        const statusOptions = allStatuses.map(status => `
+                            <option value="${status}" ${status === currentStatus ? 'selected' : ''}>
+                                ${status}
+                            </option>
+                        `).join('');
+
+                        const leadCard = `
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 ${getStatusBorderClass(currentStatus)} flex flex-col justify-between" data-lead-id="${lead.id}">
+                                <div>
+                                    <p class="text-xs text-gray-500 mb-2">${date} ${time}</p>
+                                    <h4 class="text-lg font-bold text-gray-900">${lead.name} (${lead.company})</h4>
+                                    <p class="text-sm text-accent-teal mb-1">${lead.email}</p>
+                                    ${phoneDisplay}
+                                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 mt-2 mb-4">
+                                        <p class="text-xs font-semibold text-gray-700 mb-1">Project Details:</p>
+                                        <p class="text-sm text-gray-600 truncate">${lead.projectDetails}</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-gray-200 space-y-3">
+                                    <select data-lead-id="${lead.id}" class="lead-status-select w-full p-2 border border-gray-300 rounded-lg text-sm font-semibold text-center ${getStatusColorClass(currentStatus)} transition duration-200">
+                                        ${statusOptions}
+                                    </select>
+                                    <button data-lead-details='${leadDataJson}' class="analyze-lead-button w-full px-4 py-2 text-sm font-semibold rounded-lg bg-gemini-red text-white hover:bg-red-600 transition duration-300 flex items-center justify-center">
+                                        Analyze Lead & Draft Email ✨
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        leadsListContainer.insertAdjacentHTML('beforeend', leadCard);
+                    });
+                    
+                    // Add event listeners for new buttons
+                    leadsListContainer.querySelectorAll('.analyze-lead-button').forEach(button => {
+                        button.addEventListener('click', handleLeadAnalysis);
+                    });
+
+                    // Add change listeners for status dropdowns
+                    leadsListContainer.querySelectorAll('.lead-status-select').forEach(select => {
+                        // Apply initial color class based on selection
+                        select.classList.add(getStatusColorClass(select.value));
+                        
+                        select.addEventListener('change', (e) => {
+                            const leadId = e.target.getAttribute('data-lead-id');
+                            const newStatus = e.target.value;
+                            
+                            // Remove previous status color and add new one
+                            allStatuses.forEach(s => select.classList.remove(getStatusColorClass(s)));
+                            select.classList.add(getStatusColorClass(newStatus));
+                            
+                            updateLeadStatus(leadId, newStatus);
+                        });
+                    });
+                }
+            }, (error) => {
+                console.error("Error getting real-time leads:", error);
+                leadsStatus.textContent = "Error loading leads. Check console for details.";
+            });
+        }
+
+        // --- Gemini Analysis Handler ---
+        async function handleLeadAnalysis(event) {
+            const button = event.currentTarget;
+            let leadDetails;
+            try {
+                 // Use .replace to safely decode HTML entities like &apos; back to '
+                const rawData = button.getAttribute('data-lead-details').replace(/&apos;/g, "'");
+                leadDetails = JSON.parse(rawData);
+            } catch (e) {
+                console.error("Error parsing lead details:", e);
+                return;
+            }
+
+            const modal = document.getElementById('gemini-modal');
+            const contentArea = document.getElementById('modal-content-area');
+            const loadingIndicator = document.getElementById('gemini-loading-indicator');
+            
+            // Show Modal and Loading State
+            contentArea.innerHTML = '';
+            loadingIndicator.style.display = 'block';
+            modal.classList.remove('hidden');
+
+            const systemPrompt = `You are Spade & Scale's senior strategist. Your task is to analyze a new client inquiry. 
+            First, provide a one-sentence qualification summary. 
+            Second, list the client's 3-5 key marketing needs/challenges based on the project details. 
+            Third, draft a concise, professional, and personalized follow-up email from the agency (Spade & Scale) to the client. 
+            The tone should be enthusiastic, competent, and focused on scheduling a brief introductory call.`;
+            
+            const userQuery = `Analyze the following lead from ${leadDetails.name} at ${leadDetails.company}. Project Details: "${leadDetails.projectDetails}"`;
+
+            try {
+                const result = await callGeminiApi(userQuery, systemPrompt, responseSchema);
+                loadingIndicator.style.display = 'none';
+
+                if (result.error) {
+                    contentArea.innerHTML = `<p class="text-red-500 font-semibold">API Error: ${result.error}</p>`;
+                    return;
+                }
+                
+                // Format the Key Needs list
+                const keyNeedsList = result.keyNeeds.map(need => `<li class="text-sm text-gray-700 list-disc ml-4">${need}</li>`).join('');
+
+                // Format the email body using <br> for line breaks
+                const formattedEmailBody = result.draftEmailBody.replace(/\n/g, '<br>');
+
+                // Construct the modal content
+                contentArea.innerHTML = `
+                    <div class="p-4 bg-primary-blue/10 rounded-lg border border-primary-blue/30">
+                        <h4 class="text-lg font-bold text-gray-900 mb-1">Qualification Summary:</h4>
+                        <p class="text-primary-blue font-semibold">${result.qualificationSummary}</p>
+                    </div>
+
+                    <div class="p-4 bg-gray-100 rounded-lg">
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Key Needs Identified:</h4>
+                        <ul class="space-y-1">${keyNeedsList}</ul>
+                    </div>
+                    
+                    <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <h4 class="text-lg font-bold text-gray-900 mb-3 flex justify-between items-center">
+                            <span>📧 Personalized Email Draft</span>
+                            <button id="copy-email-button" class="px-3 py-1 text-xs font-semibold rounded-full bg-accent-teal text-white hover:bg-primary-blue transition duration-300">
+                                Copy to Clipboard
+                            </button>
+                        </h4>
+                        
+                        <div id="email-content" class="bg-white p-4 rounded-lg border border-gray-200 text-sm font-mono whitespace-pre-wrap">
+                            <p class="font-bold">Subject: ${result.draftEmailSubject}</p>
+                            <hr class="my-2 border-gray-200">
+                            ${formattedEmailBody}
+                            <br><br>
+                            <p class="font-bold">-- Spade & Scale Team</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Add copy functionality
+                document.getElementById('copy-email-button').addEventListener('click', () => {
+                    const emailContent = `Subject: ${result.draftEmailSubject}\n\n${result.draftEmailBody}`;
+                    
+                    // Fallback clipboard method for iFrame environments
+                    const el = document.createElement('textarea');
+                    el.value = emailContent;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    
+                    document.getElementById('copy-email-button').textContent = 'Copied!';
+                    setTimeout(() => {
+                        document.getElementById('copy-email-button').textContent = 'Copy to Clipboard';
+                    }, 2000);
+                });
+
+
+            } catch (error) {
+                loadingIndicator.style.display = 'none';
+                contentArea.innerHTML = `<p class="text-red-500 font-semibold">An unexpected error occurred during analysis: ${error.message}</p>`;
+                console.error("Analysis Error:", error);
+            }
+        }
+
+
+        // --- Core Application Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeFirebase();
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const contactForm = document.getElementById('contact-form');
+            const submitButton = document.getElementById('submit-button');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const buttonText = document.getElementById('button-text');
+            const formMessage = document.getElementById('form-message');
+            const currentYear = document.getElementById('current-year');
+
+            // Set current year in footer
+            currentYear.textContent = new Date().getFullYear();
+
+            // Mobile Menu Toggle Logic
+            mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Form Submission Handler
+            contactForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                
+                // Show loading state
+                submitButton.disabled = true;
+                buttonText.textContent = 'Submitting...';
+                loadingSpinner.classList.remove('hidden');
+                formMessage.classList.add('hidden');
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value; // Get the new phone number
+                const company = document.getElementById('company').value;
+                const projectDetails = document.getElementById('project_details').value;
+
+                if (!db || !userId) {
+                    console.error("Firestore not initialized or user ID missing.");
+                    showMessage('Error: Backend service not ready. Please try again.', 'error');
+                    resetFormState();
+                    return;
+                }
+
+                const leadData = {
+                    name,
+                    email,
+                    phone: phone || 'N/A', // Save phone number
+                    company: company || 'N/A',
+                    projectDetails,
+                    submittedAt: new Date(),
+                    userId: userId,
+                    status: 'New' // Initial status is New
+                };
+
+                // Define the collection path for leads
+                const collectionPath = `artifacts/${appId}/users/${userId}/agency_leads`;
+
+                try {
+                    await addDoc(collection(db, collectionPath), leadData);
+                    showMessage('Success! Your inquiry has been submitted and saved securely.', 'success');
+                    contactForm.reset();
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                    showMessage('Error: Failed to save the lead. Please check your connection.', 'error');
+                } finally {
+                    resetFormState();
+                }
+            });
+
+            // Utility function to display messages
+            function showMessage(message, type) {
+                formMessage.textContent = message;
+                formMessage.classList.remove('hidden', 'text-accent-teal', 'text-red-500');
+                if (type === 'success') {
+                    formMessage.classList.add('text-accent-teal', 'font-semibold');
+                } else {
+                    formMessage.classList.add('text-red-500', 'font-semibold');
+                }
+            }
+            
+            // Utility function to reset button and form state
+            function resetFormState() {
+                submitButton.disabled = false;
+                buttonText.textContent = 'Submit Inquiry';
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
